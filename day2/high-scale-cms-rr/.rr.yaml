@@ -1,0 +1,14 @@
+version: "3"
+rpc:
+  listen: "tcp://127.0.0.1:6001"
+server:
+  command: "php worker.php"
+http:
+  address: "0.0.0.0:8080"
+  pool:
+    num_workers: 2
+    max_jobs: 0
+    supervisor:
+      max_worker_memory: 100
+      exec_timeout: 60s
+      idle_ttl: 10s
