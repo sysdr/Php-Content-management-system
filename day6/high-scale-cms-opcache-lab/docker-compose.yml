@@ -1,0 +1,27 @@
+services:
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/var/www/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./web:/var/www/html
+      - ./cli:/var/www/cli
+      - ./data:/var/www/html/data
+      - ./config/php.ini:/usr/local/etc/php/conf.d/custom-php.ini
+    environment:
+      PHP_FPM_LISTEN: 9000
+    # Enable JIT/OPcache CLI for the container's PHP binary
+    # This allows direct `docker exec` commands to pick up our php.ini
+    # For a real system, you'd configure this in php.ini
+    command: ["php-fpm"] # This command ensures php-fpm starts with our php.ini
+
