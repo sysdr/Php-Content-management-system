@@ -1,0 +1,3 @@
+# Dependencies and artifacts (inherits from root; day5-specific)
+php_cms_leak_detection/data/stats.json
+nohup.out
