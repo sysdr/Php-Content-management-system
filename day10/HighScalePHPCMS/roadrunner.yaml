@@ -1,0 +1,45 @@
+version: "2.7"
+
+http:
+  address: "0.0.0.0:8080"
+  middleware: ["compress"]
+  pool:
+    num_workers: 2 # Start with a small pool for demonstration
+    max_jobs: 0 # Workers process infinite requests until manually stopped or memory limit reached
+    supervisor:
+      max_worker_memory: 128 # MB
+      exec_timeout: 60s
+      ttl: 0 # Don't terminate workers based on TTL
+  uploads:
+    forbid_symlinks: true
+    max_size: 10
+  static:
+    dir: "public"
+    forbid: [".php", ".htaccess"]
+    # Add other static file handling if needed
+
+server:
+  command: "php worker.php" # The command to execute our PHP worker
+  relay: "pipes" # How RoadRunner communicates with PHP worker
+
+logs:
+  mode: "production"
+  level: "debug"
+  channels:
+    default:
+      output: "stderr" # RoadRunner logs to stderr
+      encoding: "console"
+    http:
+      output: "stderr"
+      encoding: "console"
+
+# Metrics:
+# metrics:
+#   address: "0.0.0.0:2112" # Prometheus metrics endpoint
+#   collect:
+#     http: true
+#     rpc: true
+#     server: true
+#     disk: ["/"]
+#     cpu: true
+#     memory: true

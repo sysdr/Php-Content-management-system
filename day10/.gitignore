@@ -1,0 +1,67 @@
+# Dependencies
+vendor/
+node_modules/
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+.eggs/
+
+# PHP / Composer
+composer.lock
+composer.phar
+
+# RoadRunner / runtime
+rr
+roadrunner.pid
+roadrunner_output.log
+php_dashboard.pid
+php_dashboard.log
+
+# Data and runtime
+HighScalePHPCMS/data/stats.json
+data/stats.json
+
+# Environment and secrets (do not commit API keys or passwords)
+.env
+.env.local
+.env.*.local
+.env.*
+*.pem
+secrets/
+*.key
+*api*key*
+*apikey*
+*secret*.json
+*secret*.yml
+*credentials*
+
+# IDE and OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Build and logs
+logs/
+*.log
+build/
+nohup.out
+*.pyc
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# Istio / Kubernetes
+*istio*
+.kubeconfig
