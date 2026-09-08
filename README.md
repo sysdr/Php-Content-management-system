@@ -1,55 +1,107 @@
-## Architectural Design and Implementation Strategy for a High-Scale PHP Content Management System
+# Designing and Building a High-Scale PHP Content Management System
 
-### [Check Course Curriculum](https://systemdrd.com/courses/hands-on-php-programming-course/)
+**3 full lessons from this course are free to read — no signup, no card.** This repository holds the working code for those lessons.
 
-The evolution of the PHP ecosystem toward a high-performance, persistent runtime model represents a fundamental shift in how engineers approach the development of content-rich digital platforms. The traditional shared-nothing architecture, while simplifying horizontal scaling, introduced a significant "bootload tax" that hampered the ability to handle hundred-million request workloads without massive infrastructure over-provisioning. This curriculum delineates a comprehensive professional-grade course centered on constructing a custom Content Management System (CMS) featuring a plugin-first architecture and a compiled template engine.
+[![Free lessons](https://img.shields.io/badge/free_lessons-3-16703E?style=flat-square)](https://systemdrd.com/courses/hands-on-php-programming-course/?utm_source=github&utm_medium=readme&utm_campaign=php-content-management-system) [![Course](https://img.shields.io/badge/full_course-90_lessons-D92B21?style=flat-square)](https://systemdrd.com/courses/hands-on-php-programming-course/?utm_source=github&utm_medium=readme&utm_campaign=php-content-management-system) [![Topic](https://img.shields.io/badge/Backend_Engineering-informational?style=flat-square)](https://systemdrd.com/courses/hands-on-php-programming-course/?utm_source=github&utm_medium=readme&utm_campaign=php-content-management-system)
 
-## Why This Course?
+## Start with the free lessons
 
-The industry demand for specialized PHP expertise is currently diverging: legacy maintenance and modern systems engineering. This course addresses the latter by treating PHP as a persistent systems language capable of sustaining massive throughput. The justification lies in the significant performance delta between traditional request-based models and modern worker-based approaches. While a standard PHP-FPM setup might handle 200 to 400 requests per second (RPS) due to the constant overhead of bootstrapping, a persistent model utilizing RoadRunner or Swoole can handle 4,000 to 8,000+ RPS on similar hardware.
+Each lesson is the same one a paying subscriber reads — the full text, not a preview. The code for it is in this repository.
 
-This curriculum moves beyond framework application, requiring students to implement the internal mechanics of a high-scale CMS. This deep understanding is essential for senior engineers making architectural trade-offs between consistency and availability in distributed environments.
+| | Read the lesson | Code in this repo |
+|---|---|---|
+| **Day 1** | [Benchmarking the “Bootload Tax”: FPM vs. Persistent Workers.](https://systemdrd.com/lessons/system-design-worker-optimization/?utm_source=github&utm_medium=readme&utm_campaign=php-content-management-system) | [`day1/`](day1) |
+| **Day 2** | [Configuring RoadRunner: The `rr.yaml` supervisor setup.](https://systemdrd.com/lessons/roadrunner-supervisor-yaml/?utm_source=github&utm_medium=readme&utm_campaign=php-content-management-system) | [`day2/`](day2) |
+| **Day 3** | [Writing the Worker Loop: Managing the Goridge protocol.](https://systemdrd.com/lessons/goridge-worker-loop-design/?utm_source=github&utm_medium=readme&utm_campaign=php-content-management-system) | [`day3/`](day3) |
 
-| Metric | PHP-FPM (Traditional) | RoadRunner (Persistent) | FrankenPHP (Modern) |
-| --- | --- | --- | --- |
-| **Request Lifecycle** | Boot  Execute  Die | Boot  (Loop: Execute) | Boot  (Loop: Execute) |
-| **Bootload Overhead** | ~10-50ms per request | ~0.1ms (Resident) | ~0.1ms (Resident) |
-| **Throughput (RPS)** | Low (200-400) | High (4,000-8,000+) | High (1,200-1,500+) |
-| **Memory Management** | Automatic Cleanup | Manual / GC-heavy | Manual / GC-heavy |
-| **Ideal Concurrency** | Process-per-request | Goroutine-managed | Go-managed Threads |
+## The rest of the course — 90 lessons
 
-## What You'll Build
+<details><summary>Full curriculum (90 lessons)</summary>
 
-The project is a head-agnostic, distributed-first CMS engine designed to operate within containerized environments at a scale of 100 million requests monthly. Key components include:
+- Day 1: Benchmarking the “Bootload Tax”: FPM vs. Persistent Workers. — **free, above**
+- Day 2: Configuring RoadRunner: The `rr.yaml` supervisor setup. — **free, above**
+- Day 3: Writing the Worker Loop: Managing the Goridge protocol. — **free, above**
+- Day 4: State Safety: Analyzing static memory in long-living processes.
+- Day 5: Memory Leak Detection: Using `gc_collect_cycles()` and memory profiling.
+- Day 6: OPcache Optimization: Enabling JIT and `opcache.enable_cli`.
+- Day 7: Resource Cleanup: Implementing safe `__destruct` patterns.
+- Day 8: Signal Handling: Managing graceful reloads for zero-downtime.
+- Day 9: Scaling with FrankenPHP: Implementing Caddy-based PHP runners.
+- Day 10: The Kernel Registry: Bootstrapping application state once per lifecycle.
+- Day11: PSR-7 Implementation: Building immutable HTTP messages.
+- Day12 : The Prefix-Tree Router: route matching logic.
+- Day13: Attribute-Based Discovery: Using PHP 8 Attributes for routing.
+- Day14: PSR-15 Middleware: Implementing the modular request pipeline.
+- Day15: Context Propagation: Managing request metadata without global state.
+- Day16: Exception Interception: Converting errors into structured responses.
+- Day17: Declarative Sanitization: Building high-frequency input validators.
+- Day18: Payload Streaming: Handling large responses using PSR-7 streams.
+- Day19: Multi-format Negotiation: Implementing the `Accept` header logic.
+- Day20: Edge Rate Limiting: Building token-bucket middleware.
+- Day21:The EAV Paradigm: Building flexible attribute tables.
+- Day22: PostgreSQL JSONB: Efficient metadata storage patterns.
+- Day 23: Hybrid Modeling: Combining indexed EAV with JSONB blobs.
+- Day 24 : Index Optimization: Implementing GIN and expression indexes.
+- Day 25 : Batch Hydration: Solving the problem for dynamic fields.
+- Day 26: Connection Pooling: Persistent DB links in worker pools.
+- Day 27: Sharding Strategies: Implementing range vs. hash partitioning.
+- Day 28: ACID vs. Scale: Transaction isolation trade-offs.
+- Day 29: The Repository Pattern: Decoupling storage from core logic.
+- Day 30 : Content Versioning: Managing history without read degradation.
+- Day 31: Metadata Discovery: Scanning namespaces for plugins.
+- Day 32: Building PSR-11: Implementing a DI container from scratch.
+- Day 33: Autowiring: Resolving dependencies using Reflection.
+- Day 34: PHP 8.4 Lazy Objects: Deferring expensive service initialization.
+- Day 35: Dependency DAG: Resolving plugin loading order.
+- Day 36: Service Providers: Implementing the “register/boot” lifecycle.
+- Day 37: Config Merging: Allowing plugins to expose dynamic settings.
+- Day 38: Interface Contracts: Ensuring stability with strict types.
+- Day 39: Anti-Pattern Defense: Eliminating the Service Locator.
+- Day 40: Circular Detection: Implementing recursive dependency checks.
+- Day 41: PSR-14 Dispatching: Building the decoupled handler system.
+- Day 42: Async Offloading: Moving events to background job queues.
+- Day 43: Priority Listeners: Managing the event execution chain.
+- Day 44: Propagation Control: Implementing `stopPropagation` logic.
+- Day 45: Event Mapping: Using `#[AsEventListener]` for registration.
+- Day 46: Domain Events: Dispatching `PostCreated` from the storage layer.
+- Day 47: Event Auditing: Tracking the request-event lifecycle.
+- Day 48: Redis Pub/Sub: Cross-worker event broadcasting.
+- Day 49: Listener Isolation: Preventing handler failures from crashing the core.
+- Day 50: Testing Events: Unit testing decoupled workflows.
+- Day 51: Lexical Analysis: Tokenizing template syntax.
+- Day 52: The Parser: Transforming tokens into an AST.
+- Day 53: AST Compiler: Pruning trees for optimized output.
+- Day 54: Code Generation: Compiling templates to cached PHP classes.
+- Day 55: Security Sandboxing: Implementing capability-based restrictions.
+- Day 56: Contextual Escaping: Automated XSS protection.
+- Day 57: Template Inheritance: Implementing block/extends logic.
+- Day 58: Custom DSL: Allowing plugins to add tags and filters.
+- Day 59: Multi-layer Caching: Balancing disk and memory storage.
+- Day 60: AST Visualization: Building debugging tools for compilers.
+- Day 61: Caching Hierarchy: L1 (Local), L2 (Redis), L3 (Varnish).
+- Day 62: Consistent Hashing: Implementing a hash ring for clusters.
+- Day 63: Stampede Protection: The “Lease” and locking mechanism.
+- Day 64: Tag-Based Invalidation: Grouping related cache keys.
+- Day 65: Varnish & ESI: Hybrid caching for dynamic fragments.
+- Day 66: Consistency Patterns: Write-through vs. write-behind.
+- Day 67: The Gutter Pool: Handling server failure with fallback nodes.
+- Day 68: Probabilistic Eviction: Managing memory limits at scale.
+- Day 69: Session Scaling: Implementing Redis-backed persistent sessions.
+- Day 70: Cache Warming: Pre-populating high-traffic content.
+- …and 20 more
 
-1. **Core Engine**: Built on the RoadRunner application server, leveraging the Goridge protocol for efficient communication between the Go supervisor and PHP worker pools.
-2. **Persistent Data Layer**: A hybrid storage system managing dynamic content schemas using Entity-Attribute-Value (EAV) and JSONB patterns in PostgreSQL.
-3. **AST-Based Template Engine**: A proprietary engine featuring a lexer and parser that generates an Abstract Syntax Tree (AST), transformed into optimized PHP classes.
-4. **Secure Plugin System**: Utilizing isolation patterns for capability-based security, ensuring third-party code cannot execute unauthorized system calls.
+</details>
 
-## Who Should Take This Course?
+## Get the whole course
 
-This curriculum targets technical professionals responsible for the reliability and scalability of large-scale web platforms:
+**$99 one-off.** No subscription.
 
-* **Senior Backend Engineers**: Focusing on runtime internals, fiber-based concurrency, and memory management.
-* **System Architects**: Testing distributed caching strategies, consistent hashing, and PACELC theorem implementations.
-* **Product Managers**: Understanding performance implications of data modeling (EAV vs. JSONB) for feature roadmaps.
-* **SREs**: Integrating OpenTelemetry for distributed traces and high-frequency metrics.
+- All 90 lessons, written to the same depth as the 3 free ones above
+- The complete source repository, one commit per lesson, beyond the 3 lessons here
+- Every later lesson builds on the code in this repo, so nothing is thrown away
 
-## What Makes This Course Different?
+### [Read the free lessons first →](https://systemdrd.com/courses/hands-on-php-programming-course/?utm_source=github&utm_medium=readme&utm_campaign=php-content-management-system)
 
-Unlike "framework-first" tutorials, this course adopts a principles-first approach. It treats the PHP worker as a long-living daemon, confronting challenges typically reserved for languages like Go, such as memory leak detection and state pollution. It also explores cutting-edge isolation using WebAssembly (Wasm) and process-level sandboxing.
+---
 
-## Key Topics Covered
-
-* **Advanced Runtime**: Managing PHP worker lifecycles and connection pooling.
-* **Metadata-Driven Architecture**: Using PHP 8 Attributes and Reflection for discovery-based plugin systems.
-* **Data Modeling**: Optimizing GIN and expression indexes for dynamic schemas.
-* **Scaling Caching**: Implementing consistent hashing, lease mechanisms, and tag-based invalidation.
-
-## Prerequisites
-
-* Advanced PHP knowledge (PHP 8.x features, Fibers).
-* Relational database mastery (PostgreSQL indexing, transaction isolation).
-* Infrastructure competency (Docker/Kubernetes).
-* Familiarity with PSR-4, PSR-7, PSR-11, and PSR-14.
+Part of [SystemDR](https://systemdrd.com/courses/?utm_source=github&utm_medium=readme&utm_campaign=php-content-management-system) — hands-on engineering courses where you build the system, break it, and fix it. [All courses](https://systemdrd.com/courses/?utm_source=github&utm_medium=readme&utm_campaign=php-content-management-system) · [Free lessons across every course](https://systemdrd.com/trial-lessons/?utm_source=github&utm_medium=readme&utm_campaign=php-content-management-system)
